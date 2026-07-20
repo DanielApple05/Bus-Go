@@ -5,8 +5,8 @@ const navLinks = [
   { tab: 'Home', path: "/" },
   { tab: 'My Bookings', path: "/booking" },
   { tab: 'Routes', path: "/busRoutes" },
-  { tab: 'About', path: "/" },
-  { tab: 'contact', path: "/" }
+  { tab: 'About', path: "#" },
+  { tab: 'contact', path: "#" }
 ];
 
 const NavBar = () => {

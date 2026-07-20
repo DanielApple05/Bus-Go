@@ -4,6 +4,7 @@ import Index from './pages/index';
 import BusRoutes from './pages/busRoutes';
 import AvailableBuses from './pages/availableBuses';
 import BookingSummary from './pages/bookingSumary';
+import SeatSelection from './pages/seatSelection';
 
 
 
@@ -14,6 +15,7 @@ const App = () => {
       <Route path="/busRoutes" element={<BusRoutes />} />
       <Route path="/availableBuses" element={<AvailableBuses />} />
       <Route path="/booking" element={<BookingSummary />} />
+       <Route path="/seat" element={<SeatSelection />} />
     </Routes>
   );
 }
