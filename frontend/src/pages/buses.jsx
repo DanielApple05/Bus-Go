@@ -27,7 +27,7 @@ const mockRoutes = [
   { from: 'Lagos', to: 'Benin', price: 18000 },
 ];
 
-const BusRoutes = ({ onSelectRoute }) => {
+const Buses = ({ onSelectRoute }) => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
@@ -73,4 +73,4 @@ const BusRoutes = ({ onSelectRoute }) => {
   );
 }
 
-export default BusRoutes;
+export default Buses;

@@ -26,7 +26,7 @@ const TripSearchForm = ({ onSearch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch?.({ tripType, ...form })
+    onSearch?.({ tripType, ...form });
   };
 
   return (
@@ -94,6 +94,7 @@ const TripSearchForm = ({ onSearch }) => {
           <div className="flex items-center gap-2 px-3 h-11 rounded-lg border border-slate-200 bg-slate-50 focus-within:border-orange-600">
             <input
               type="date"
+              min={new Date().toISOString().split('T')[0]}
               value={form.date}
               onChange={handleChange('date')}
               className='w-full'
@@ -109,6 +110,7 @@ const TripSearchForm = ({ onSearch }) => {
               <input
                 optional
                 type="date"
+                min={new Date().toISOString().split('T')[0]}
                 value={form.returnDate}
                 onChange={handleChange('returnDate')}
                 className='w-full'
