@@ -2,8 +2,8 @@ import TripSearchForm from './tripSearchForm';
 
 const Hero = ({ onSearch }) => {
   return (
-    <section className="relative bg-linear-to-br from-slate-800 via-slate-700 to-orange-900 py-16 px-10 overflow-hidden ">
-      <div className="relative max-w-2xl mb-6">
+    <section className="relative bg-linear-to-br from-slate-800 via-slate-700 to-orange-900 p-14 overflow-hidden h-screen grid ">
+      <div className="relative max-w-2xl">
         <h1 className="text-5xl font-bold text-white leading-tight">
           Your Journey,<br />Our Priority<span className="text-orange-500">.</span>
         </h1>
