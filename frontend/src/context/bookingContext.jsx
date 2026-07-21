@@ -14,7 +14,7 @@ const initialState = {
   booking: null, // pending booking returned by POST /booking
 };
 
-export function BookingProvider({ children }) {
+export const BookingProvider = ({ children }) => {
   const [booking, setBookingState] = useState(initialState);
 
   const updateBooking = (updates) =>

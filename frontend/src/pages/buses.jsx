@@ -1,6 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import BusCard from '../components/BusCard';
+import { useBooking } from '../context/BookingContext';
 
 // Replace with data from GET /availability?from=&to=&date=
 const mockBuses = [
@@ -10,6 +11,9 @@ const mockBuses = [
 ];
 
 const AvailableBuses = ({ route, date, onBack, onSelectBus }) => {
+
+  const { booking } = useBooking();
+
   return (
     <div>
       <Navbar />
@@ -21,7 +25,7 @@ const AvailableBuses = ({ route, date, onBack, onSelectBus }) => {
 
         <h1 className="text-2xl font-bold text-slate-900">Available Buses</h1>
         <p className="text-slate-500 text-sm mt-1">
-          {route?.from} &rarr; {route?.to} &nbsp;&bull;&nbsp; {date}
+          {booking?.from} &rarr; {booking?.to} &nbsp;&bull;&nbsp; {booking?.date}
         </p>
 
         <div className="flex flex-col gap-4 mt-6">
