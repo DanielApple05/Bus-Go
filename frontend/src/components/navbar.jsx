@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const navLinks = [
   { tab: 'Home', path: "/" },
   { tab: 'My Bookings', path: "/booking" },
-  { tab: 'Routes', path: "/busRoutes" },
+  { tab: 'Routes', path: "/routes" },
   { tab: 'About', path: "#" },
   { tab: 'contact', path: "#" }
 ];
