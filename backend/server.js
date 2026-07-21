@@ -14,8 +14,8 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.use('/routes', routeRoutes);
-app.use('/buses', busRoutes);
+app.use('/api/routes', routeRoutes);
+app.use('/api/buses', busRoutes);
 app.use('/', bookingRoutes); // handles /availability, /booking, /confirm-booking
 
 app.get('/', (req, res) => res.send('Bus Booking API running'));

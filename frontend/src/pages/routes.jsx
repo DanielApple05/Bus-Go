@@ -5,6 +5,8 @@ import Navbar from '../components/Navbar';
 import RouteCard from '../components/routeCard';
 import { useBooking } from '../context/BookingContext';
 
+import { useEffect } from 'react';
+
 const mockRoutes = [
   { from: 'Lagos', to: 'Abuja', price: 24000 },
   { from: 'Abuja', to: 'Port Harcourt', price: 22000 },
@@ -19,6 +21,17 @@ const Buses = () => {
   const [to, setTo] = useState('');
   const navigate = useNavigate();
   const { updateBooking } = useBooking();
+
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      try {
+        const response = await getRoutes();
+        console.log(response.data);
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+  }, [])
 
   const handleSearch = (e) => {
     e.preventDefault();

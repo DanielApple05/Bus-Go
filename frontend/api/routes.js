@@ -1,3 +1,3 @@
 import API from './axios';
 
-export const getRoutes = (data) => await API.get('/routes', data );
+export const getRoutes = (data) => API.get('/routes', data );
