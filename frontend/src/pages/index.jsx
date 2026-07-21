@@ -4,6 +4,7 @@ import Features from "../components/features";
 import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 
+
 const Index = () => {
 
   const navigate = useNavigate();

@@ -121,7 +121,6 @@ const seed = async () => {
 
     await Route.deleteMany({}); // clear old routes before reseeding
     await Route.insertMany(routes);
-
     console.log(`Seeded ${routes.length} routes`);
     process.exit(0);
   } catch (err) {
