@@ -4,21 +4,15 @@ import { MapPin, ArrowLeftRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import RouteCard from '../components/routeCard';
 import { useBooking } from '../context/BookingContext';
-
 import { useEffect } from 'react';
+import { getRoutes } from "../../api/routes";
 
-const mockRoutes = [
-  { from: 'Lagos', to: 'Abuja', price: 24000 },
-  { from: 'Abuja', to: 'Port Harcourt', price: 22000 },
-  { from: 'Port Harcourt', to: 'Lagos', price: 28000 },
-  { from: 'Enugu', to: 'Lagos', price: 20000 },
-  { from: 'Benin', to: 'Lagos', price: 22000 },
-  { from: 'Lagos', to: 'Benin', price: 18000 },
-];
 
 const Buses = () => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
+  const [routes, setRoutes] = useState(null);
+  const [popularRoutes, setPopularRoutes] = useState([]);
   const navigate = useNavigate();
   const { updateBooking } = useBooking();
 
@@ -26,12 +20,19 @@ const Buses = () => {
     const fetchRoutes = async () => {
       try {
         const response = await getRoutes();
-        console.log(response.data);
+        setRoutes(response.data);
+         setPopularRoutes(getRandomRoutes(response.data, 6));
       } catch (error) {
-        console.log(error.response)
+        console.log(error);
       }
-    }
-  }, [])
+    };
+    fetchRoutes();
+  }, []);
+
+  const getRandomRoutes = (routes, count = 6) => {
+  const shuffled = [...routes].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -86,7 +87,7 @@ const Buses = () => {
       <section className="max-w-4xl mx-auto py-12 px-6">
         <h2 className="text-lg font-semibold text-slate-900 mb-4">Popular Routes</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {mockRoutes.map((route) => (
+          {popularRoutes?.map((route) => (
             <RouteCard key={`${route.from}-${route.to}`} {...route} onSelect={() => handleSelectRoute(route)} />
           ))}
         </div>
