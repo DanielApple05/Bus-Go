@@ -1,35 +1,45 @@
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Lock, ShieldCheck, Info } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import { useBooking } from '../context/BookingContext';
 
-const Card = ({ title, children }) => {
-  return (
-    <div className="rounded-xl border border-slate-200 p-5">
-      <h3 className="font-semibold text-slate-900 mb-4">{title}</h3>
-      {children}
-    </div>
-  );
-}
+const Card = ({ title, children }) => (
+  <div className="rounded-xl border border-slate-200 p-5">
+    <h3 className="font-semibold text-slate-900 mb-4">{title}</h3>
+    {children}
+  </div>
+);
 
-const Row = ({ label, value, strong }) => {
-  return (
-    <div className="flex items-center justify-between text-sm py-1">
-      <span className="text-slate-500">{label}</span>
-      <span className={strong ? 'font-semibold text-slate-900' : 'text-slate-700'}>{value}</span>
-    </div>
-  );
-}
+const Row = ({ label, value, strong }) => (
+  <div className="flex items-center justify-between text-sm py-1">
+    <span className="text-slate-500">{label}</span>
+    <span className={strong ? 'font-semibold text-slate-900' : 'text-slate-700'}>{value}</span>
+  </div>
+);
 
-const BookingSummary = ({ booking, onBack, onPay }) => {
-  const { route, bus, passenger, seatNumber, date } = booking;
+const BookingSummary = () => {
+  const { booking } = useBooking();
+  const navigate = useNavigate();
+
+  if (!booking.bus || !booking.booking) {
+    navigate('/');
+    return null;
+  }
+
   const serviceFee = 1000;
-  const total = bus.price + serviceFee;
+  const total = booking.bus.route.price + serviceFee;
+
+  const handlePay = () => {
+    // Paystack integration goes here — will call POST /confirm-booking on success
+    navigate('/confirmation');
+  };
 
   return (
     <div>
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
           <ArrowLeft size={18} />
         </button>
 
@@ -38,32 +48,31 @@ const BookingSummary = ({ booking, onBack, onPay }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <Card title="Trip Details">
-            <Row label="Route" value={`${route.from} → ${route.to}`} />
-            <Row label="Date" value={date} />
-            <Row label="Bus" value={bus.name} strong />
-            <Row label="Departure" value={bus.departure} />
-            <Row label="Arrival" value={bus.arrival} />
+            <Row label="Route" value={`${booking.from} → ${booking.to}`} />
+            <Row label="Date" value={booking.date} />
+            <Row label="Bus" value={booking.bus.busType} strong />
+            <Row label="Departure" value={booking.bus.departureTime} />
           </Card>
 
           <Card title="Passenger Details">
-            <Row label="Name" value={passenger.name} />
-            <Row label="Email" value={passenger.email} />
-            <Row label="Phone" value={passenger.phone} />
+            <Row label="Name" value={booking.passenger.name} />
+            <Row label="Email" value={booking.passenger.email} />
+            <Row label="Phone" value={booking.passenger.phone} />
             <div className="mt-4 pt-4 border-t border-slate-100">
-              <Row label="Seat Number" value={seatNumber} strong />
+              <Row label="Seat Number" value={booking.seatNumber} strong />
             </div>
           </Card>
 
           <div className="rounded-xl border border-slate-200 p-5">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Summary</h3>
-            <Row label="Ticket Price" value={`₦${bus.price.toLocaleString()}`} />
+            <Row label="Ticket Price" value={`₦${booking.bus.route.price.toLocaleString()}`} />
             <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} />
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
               <span className="font-semibold text-slate-900">Total Amount</span>
               <span className="font-bold text-orange-600">₦{total.toLocaleString()}</span>
             </div>
             <button
-              onClick={onPay}
+              onClick={handlePay}
               className="w-full flex items-center justify-center gap-2 mt-5 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700"
             >
               <Lock size={16} />
@@ -83,6 +92,6 @@ const BookingSummary = ({ booking, onBack, onPay }) => {
       </div>
     </div>
   );
-}
+};
 
 export default BookingSummary;
