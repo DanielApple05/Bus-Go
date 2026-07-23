@@ -3,15 +3,22 @@ import { createContext, useContext, useState } from 'react';
 const BookingContext = createContext(null);
 
 const initialState = {
-  tripType: 'one-way',
-  from: '',
-  to: '',
-  date: '',
-  returnDate: '',
+  tripType: "one-way",
+
+  // Outbound journey
+  from: "",
+  to: "",
+  date: "",
   bus: null,
   seatNumber: null,
+
+  // Return journey
+  returnDate: "",
+  returnBus: null,
+  returnSeatNumber: null,
+
   passenger: null,
-  booking: null, // pending booking returned by POST /booking
+  booking: null,
 };
 
 export const BookingProvider = ({ children }) => {

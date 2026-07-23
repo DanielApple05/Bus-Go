@@ -27,7 +27,7 @@ const BookingSummary = () => {
   }
 
   const serviceFee = 1000;
-  const total = booking.bus.route.price + serviceFee;
+  const total = booking.tripType === "one-way" ? booking.bus.route.price + serviceFee : booking.bus.route.price * 2
 
   const handlePay = () => {
     // Paystack integration goes here — will call POST /confirm-booking on success
@@ -52,6 +52,8 @@ const BookingSummary = () => {
             <Row label="Date" value={booking.date} />
             <Row label="Bus" value={booking.bus.busType} strong />
             <Row label="Departure" value={booking.bus.departureTime} />
+            <Row label="Trip Type" value={booking.tripType} />
+            <Row label="Returning" value={booking.returnDate} />
           </Card>
 
           <Card title="Passenger Details">
@@ -66,7 +68,7 @@ const BookingSummary = () => {
           <div className="rounded-xl border border-slate-200 p-5">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Summary</h3>
             <Row label="Ticket Price" value={`₦${booking.bus.route.price.toLocaleString()}`} />
-            <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} />
+            { booking.tripType === "one-way" && <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} /> }
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
               <span className="font-semibold text-slate-900">Total Amount</span>
               <span className="font-bold text-orange-600">₦{total.toLocaleString()}</span>

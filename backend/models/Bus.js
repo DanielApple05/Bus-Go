@@ -26,7 +26,7 @@ const busSchema = new mongoose.Schema(
       default: "standard",
     },
     departureDate: { type: Date, required: true },
-    departureTime: { type: String, required: true }, // e.g. "08:00"
+    departureTime: { type: String, required: true }, 
     totalSeats: { type: Number, default: 32 },
     seats: [seatSchema],
   },

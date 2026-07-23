@@ -14,7 +14,7 @@ const TripSearchForm = ({ onSearch }) => {
       from: '',
       to: '',
       date: '',
-      returnDate: ''
+      returnDate: '',
     });
 
   const handleChange = (field) => (e) => {
@@ -26,6 +26,14 @@ const TripSearchForm = ({ onSearch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (tripType === 'round-trip' && !form.returnDate) {
+      alert('Please select a return date for round trips.');
+      return;
+    }
+    if (tripType === 'round-trip' && form.returnDate < form.date) {
+      alert('Return date must be after departure date.');
+      return;
+    }
     onSearch?.({ tripType, ...form });
   };
 
