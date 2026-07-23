@@ -16,12 +16,12 @@ const Buses = () => {
   const navigate = useNavigate();
   const { updateBooking } = useBooking();
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchRoutes = async () => {
       try {
         const response = await getRoutes();
-        setRoutes(response.data);
-         setPopularRoutes(getRandomRoutes(response.data, 6));
+        setRoutes(response);
+        setPopularRoutes(getRandomRoutes(response, 6));
       } catch (error) {
         console.log(error);
       }
@@ -30,15 +30,15 @@ const Buses = () => {
   }, []);
 
   const getRandomRoutes = (routes, count = 6) => {
-  const shuffled = [...routes].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}
+    const shuffled = [...routes].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  }
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (!from || !to) return;
     updateBooking({ from, to });
-    navigate('/buses'); // still needs a date — see note below
+    navigate('/buses'); 
   };
 
   const handleSelectRoute = (route) => {

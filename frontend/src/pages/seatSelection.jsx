@@ -1,28 +1,19 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import SeatMap from '../components/SeatMap';
+import { useBooking } from '../context/BookingContext';
+import { createBooking } from '../../api/bookings';
 
-// Replace with real seats from the selected bus (GET /availability result)
-const mockSeats = (total = 32) => {
-  const bookedSet = new Set([3, 4, 12, 21]);
-  return Array.from({ length: total }, (_, i) => ({
-    seatNumber: `${Math.floor(i / 4) + 1}${['A', 'B', 'C', 'D'][i % 4]}`,
-    status: bookedSet.has(i) ? 'booked' : 'available',
-  }));
-}
+const Legend = ({ colorClass, label, filled }) => (
+  <div className="flex items-center gap-1.5">
+    <div className={`w-3 h-3 rounded-sm ${filled ? 'bg-orange-600' : `border ${colorClass.replace('text-', 'border-')}`}`} />
+    {label}
+  </div>
+);
 
-
-const Legend = ({ colorClass, label, filled }) => {
-  return (
-    <div className="flex items-center gap-1.5">
-      <div className={`w-3 h-3 rounded-sm ${filled ? 'bg-orange-600' : `border ${colorClass.replace('text-', 'border-')}`}`} />
-      {label}
-    </div>
-  );
-}
-
-function Input({ label, ...props }) {
+const Input = ({ label, ...props }) => {
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-slate-800">{label}</span>
@@ -34,10 +25,21 @@ function Input({ label, ...props }) {
   );
 }
 
-const SeatSelection = ({ bus, route, date, onBack, onContinue }) => {
-  const seats = useMemo(() => mockSeats(bus.totalSeats || 32), [bus]);
+const SeatSelection = () => {
+  const { booking, updateBooking } = useBooking();
+  const navigate = useNavigate();
+
+  const bus = booking.bus;
+
   const [selected, setSelected] = useState([]);
   const [passenger, setPassenger] = useState({ name: '', email: '', phone: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  if (!bus) {
+    navigate('/buses');
+    return null;
+  }
 
   const toggleSeat = (seatNumber) => {
     setSelected((prev) =>
@@ -45,31 +47,51 @@ const SeatSelection = ({ bus, route, date, onBack, onContinue }) => {
     );
   };
 
-  const total = selected.length * bus.price;
-  const canContinue = selected.length > 0 && passenger.name && passenger.email && passenger.phone;
+  const total = selected.length * bus.route.price;
+  const canContinue = selected.length > 0 && passenger.name && passenger.email && passenger.phone && !submitting;
 
   const handleChange = (field) => (e) =>
     setPassenger((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleContinue = async () => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const result = await createBooking({
+        tripType: booking.tripType,
+        busId: bus._id,
+        travelDate: booking.date,
+        returnDate: booking.returnDate || null,
+        seatNumbers: selected,
+        passenger,
+      });
+      updateBooking({ seatNumber: selected[0], passenger, booking: result });
+      navigate('/summary');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Could not reserve that seat. Try another.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div>
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 py-10 pb-32">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
           <ArrowLeft size={18} />
         </button>
 
         <h1 className="text-2xl font-bold text-slate-900">Select Your Seat</h1>
         <p className="text-slate-500 text-sm mt-1">
-          {route.from} &rarr; {route.to} &nbsp;&bull;&nbsp; {bus.name} &nbsp;&bull;&nbsp; {date}
+          {booking.from} &rarr; {booking.to} &nbsp;&bull;&nbsp; {bus.busType} &nbsp;&bull;&nbsp; {booking.date}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6 mt-6">
-          {/* Seat map card */}
           <div className="rounded-xl border border-slate-200 p-6">
             <div className="w-full text-center text-xs text-slate-400 mb-2">Front of bus</div>
-            <SeatMap seats={seats} layout="2+2" selected={selected} onToggle={toggleSeat} />
+            <SeatMap seats={bus.seats} layout="2+2" selected={selected} onToggle={toggleSeat} />
 
             <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-slate-100 text-xs text-slate-500">
               <Legend colorClass="text-slate-400" label="Available" />
@@ -78,7 +100,6 @@ const SeatSelection = ({ bus, route, date, onBack, onContinue }) => {
             </div>
           </div>
 
-          {/* Passenger + summary card */}
           <div className="rounded-xl border border-slate-200 p-5 h-fit">
             <h3 className="font-semibold text-slate-900 mb-4">Passenger Details</h3>
             <div className="flex flex-col gap-3">
@@ -98,18 +119,20 @@ const SeatSelection = ({ bus, route, date, onBack, onContinue }) => {
               </div>
             </div>
 
+            {error && <p className="text-red-500 text-xs mt-3">{error}</p>}
+
             <button
               disabled={!canContinue}
-              onClick={() => onContinue({ seatNumber: selected[0], passenger })}
+              onClick={handleContinue}
               className="w-full mt-5 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed"
             >
-              Continue to Summary
+              {submitting ? 'Reserving seat...' : 'Continue to Summary'}
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default SeatSelection
+export default SeatSelection;

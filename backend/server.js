@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use('/api/routes', routeRoutes);
 app.use('/api/buses', busRoutes);
-app.use('/', bookingRoutes); // handles /availability, /booking, /confirm-booking
+app.use('/api', bookingRoutes); // handles /availability, /booking, /confirm-booking
 
 app.get('/', (req, res) => res.send('Bus Booking API running'));
 

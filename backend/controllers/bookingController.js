@@ -86,12 +86,10 @@ const createBooking = async (req, res) => {
     }
 
     if (unavailable.length) {
-      return res
-        .status(409)
-        .json({
-          message: "Some seats are no longer available",
-          seats: unavailable,
-        });
+      return res.status(409).json({
+        message: "Some seats are no longer available",
+        seats: unavailable,
+      });
     }
 
     seatNumbers.forEach((seatNum) => {

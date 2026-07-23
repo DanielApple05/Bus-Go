@@ -2,35 +2,46 @@ import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import BusCard from '../components/BusCard';
 import { useBooking } from '../context/BookingContext';
+import { getAvailability } from '../../api/buses';
+import { useEffect, useState } from 'react';
 
-// Replace with data from GET /availability?from=&to=&date=
-const mockBuses = [
-  { id: 1, name: 'Luxury Coach', seatLayout: '2+1 Seater', from: 'Lagos', to: 'Abuja', departure: '08:00 AM', arrival: '02:00 PM', price: 24000, availableSeats: 18 },
-  { id: 2, name: 'Executive Bus', seatLayout: '2+2 Seater', from: 'Lagos', to: 'Abuja', departure: '09:30 AM', arrival: '03:30 PM', price: 20000, availableSeats: 24 },
-  { id: 3, name: 'Standard Bus', seatLayout: '2+2 Seater', from: 'Lagos', to: 'Abuja', departure: '11:00 AM', arrival: '05:00 PM', price: 16000, availableSeats: 30 },
-];
+
 
 const AvailableBuses = ({ route, date, onBack, onSelectBus }) => {
 
   const { booking } = useBooking();
 
+  const [buses, setBuses] = useState([]);
+
+  useEffect(() => {
+    const fetchBuses = async () => {
+      try {
+        const data = await getAvailability(booking.from, booking.to, booking.date);
+        console.log(data);
+        setBuses(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (booking.from && booking.to && booking.date) {
+      fetchBuses();
+    }
+  }, [booking.from, booking.to, booking.date]);
+
   return (
     <div>
       <Navbar />
-
       <div className="max-w-4xl mx-auto px-6 py-10">
         <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
           <ArrowLeft size={18} />
         </button>
-
         <h1 className="text-2xl font-bold text-slate-900">Available Buses</h1>
         <p className="text-slate-500 text-sm mt-1">
           {booking?.from} &rarr; {booking?.to} &nbsp;&bull;&nbsp; {booking?.date}
         </p>
-
         <div className="flex flex-col gap-4 mt-6">
-          {mockBuses.map((bus) => (
-            <BusCard key={bus.id} bus={bus} onSelect={onSelectBus} />
+          {buses.map((bus) => (
+            <BusCard key={bus._id} bus={bus} onSelect={onSelectBus} />
           ))}
         </div>
       </div>
