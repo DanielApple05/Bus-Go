@@ -51,7 +51,7 @@ const AvailableBuses = ({ route, date, onBack }) => {
         <p className="text-slate-500 text-sm mt-1">
           {booking?.from} &rarr; {booking?.to} &nbsp;&bull;&nbsp; {booking?.date}
         </p>
-      {  loading ? (<BusCardSkeleton/>) : 
+      {  loading ? (<BusCardSkeleton />) : 
         (<div className="flex flex-col gap-4 mt-6">
           {buses.map((bus) => (
             <BusCard key={bus._id} bus={bus} onSelect={onSelectBus} />

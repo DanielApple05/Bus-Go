@@ -6,6 +6,7 @@ import RouteCard from '../components/routeCard';
 import { useBooking } from '../context/BookingContext';
 import { useEffect } from 'react';
 import { getRoutes } from "../../api/routes";
+import RouteCardSkeleton from '../components/routeCardSkeleton';
 
 
 const Buses = () => {
@@ -15,17 +16,21 @@ const Buses = () => {
   const [popularRoutes, setPopularRoutes] = useState([]);
   const navigate = useNavigate();
   const { updateBooking } = useBooking();
+  const [loading, setLoading] = useState(false)
 
-   const date = new Date().toISOString().split('T')[0]
+  const date = new Date().toISOString().split('T')[0]
 
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
+        setLoading(true)
         const response = await getRoutes();
         setRoutes(response);
         setPopularRoutes(getRandomRoutes(response, 6));
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false)
       }
     };
     fetchRoutes();
@@ -89,11 +94,12 @@ const Buses = () => {
 
       <section className="max-w-4xl mx-auto py-12 px-6">
         <h2 className="text-lg font-semibold text-slate-900 mb-4">Popular Routes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {popularRoutes?.map((route) => (
-            <RouteCard key={`${route.from}-${route.to}`} {...route} onSelect={() => handleSelectRoute(route)} />
-          ))}
-        </div>
+        {loading ? (<RouteCardSkeleton />) :
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {popularRoutes?.map((route) => (
+              <RouteCard key={`${route.from}-${route.to}`} {...route} onSelect={() => handleSelectRoute(route)} />
+            ))}
+          </div>}
       </section>
 
       <section className="max-w-4xl mx-auto mb-12 px-6">
