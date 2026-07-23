@@ -26,8 +26,10 @@ const BookingSummary = () => {
     return null;
   }
 
-  const serviceFee = 1000;
-  const total = booking.tripType === "one-way" ? booking.bus.route.price + serviceFee : booking.bus.route.price * 2
+  const serviceFee = 1000 * booking.seatNumbers.length;
+  const roundTrip = booking.bus.route.price * 2
+  const total = booking.tripType === "one-way" ? booking.bus.route.price * booking.seatNumbers.length + serviceFee : roundTrip;
+
 
   const handlePay = () => {
     // Paystack integration goes here — will call POST /confirm-booking on success
@@ -53,7 +55,7 @@ const BookingSummary = () => {
             <Row label="Bus" value={booking.bus.busType} strong />
             <Row label="Departure" value={booking.bus.departureTime} />
             <Row label="Trip Type" value={booking.tripType} />
-            <Row label="Returning" value={booking.returnDate} />
+            {booking.tripType === "round-trip" && <Row label="Returning" value={booking.returnDate} />}
           </Card>
 
           <Card title="Passenger Details">
@@ -61,14 +63,14 @@ const BookingSummary = () => {
             <Row label="Email" value={booking.passenger.email} />
             <Row label="Phone" value={booking.passenger.phone} />
             <div className="mt-4 pt-4 border-t border-slate-100">
-              <Row label="Seat Number" value={booking.seatNumber} strong />
+              <Row label="Seat Numbers" value={booking.seatNumbers?.join(', ')} strong />
             </div>
           </Card>
 
           <div className="rounded-xl border border-slate-200 p-5">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Summary</h3>
             <Row label="Ticket Price" value={`₦${booking.bus.route.price.toLocaleString()}`} />
-            { booking.tripType === "one-way" && <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} /> }
+            {booking.tripType === "one-way" && <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} />}
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
               <span className="font-semibold text-slate-900">Total Amount</span>
               <span className="font-bold text-orange-600">₦{total.toLocaleString()}</span>

@@ -41,9 +41,15 @@ const SeatSelection = () => {
     return null;
   }
 
+  const MAX_SEATS = 6;
+
   const toggleSeat = (seatNumber) => {
     setSelected((prev) =>
-      prev.includes(seatNumber) ? prev.filter((s) => s !== seatNumber) : prev.length < 1 ? [...prev, seatNumber] : prev
+      prev.includes(seatNumber)
+        ? prev.filter((s) => s !== seatNumber)
+        : prev.length < MAX_SEATS
+          ? [...prev, seatNumber]
+          : prev
     );
   };
 
@@ -65,7 +71,7 @@ const SeatSelection = () => {
         seatNumbers: selected,
         passenger,
       });
-      updateBooking({ seatNumber: selected[0], passenger, booking: result });
+      updateBooking({ seatNumbers: selected, passenger, booking: result });
       navigate('/summary');
     } catch (err) {
       setError(err.response?.data?.message || 'Could not reserve that seat. Try another.');
@@ -110,8 +116,10 @@ const SeatSelection = () => {
 
             <div className="mt-5 pt-4 border-t border-slate-100 text-sm">
               <div className="flex items-center justify-between text-slate-500">
-                <span>Selected Seat</span>
-                <span className="font-mono text-slate-900">{selected[0] || '—'}</span>
+                <span>Selected Seats</span>
+                <span className="font-mono text-slate-900">
+                  {selected.length ? selected.join(', ') : '—'}
+                </span>
               </div>
               <div className="flex items-center justify-between mt-2">
                 <span className="font-semibold text-slate-900">Total</span>

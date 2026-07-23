@@ -10,7 +10,7 @@ const initialState = {
   to: "",
   date: "",
   bus: null,
-  seatNumber: null,
+  seatNumber: [],
 
   // Return journey
   returnDate: "",
