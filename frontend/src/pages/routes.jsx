@@ -16,7 +16,9 @@ const Buses = () => {
   const navigate = useNavigate();
   const { updateBooking } = useBooking();
 
-  useEffect(() => { 
+   const date = new Date().toISOString().split('T')[0]
+
+  useEffect(() => {
     const fetchRoutes = async () => {
       try {
         const response = await getRoutes();
@@ -37,12 +39,13 @@ const Buses = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (!from || !to) return;
-    updateBooking({ from, to });
-    navigate('/buses'); 
+    updateBooking({ from, to, date });
+    navigate('/buses');
   };
 
+
   const handleSelectRoute = (route) => {
-    updateBooking({ from: route.from, to: route.to });
+    updateBooking({ from: route.from, to: route.to, date });
     navigate('/buses');
   };
 

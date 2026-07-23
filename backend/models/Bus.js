@@ -22,13 +22,14 @@ const busSchema = new mongoose.Schema(
     },
     busType: {
       type: String,
-      enum: ['standard', 'executive', 'luxury', 'hire'],
+      enum: ["standard", "executive", "luxury", "hire"],
       default: "standard",
     },
     departureDate: { type: Date, required: true },
-    departureTime: { type: String, required: true }, 
+    departureTime: { type: String, required: true },
     totalSeats: { type: Number, default: 32 },
     seats: [seatSchema],
+    price: { type: Number, required: true },
   },
   { timestamps: true },
 );

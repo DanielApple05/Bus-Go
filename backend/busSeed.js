@@ -3,15 +3,14 @@ const mongoose = require('mongoose');
 const Route = require('./models/Route');
 const Bus = require('./models/Bus');
 
-const DAYS_AHEAD = 5; // how many days of buses to generate, starting today
+const DAYS_AHEAD = 5;
 
 const busConfigs = [
-  { busType: 'standard', departureTime: '08:00', totalSeats: 32, layout: '2+2' },
-  { busType: 'executive', departureTime: '11:00', totalSeats: 28, layout: '2+2' },
-  { busType: 'luxury', departureTime: '15:00', totalSeats: 24, layout: '2+1' },
+  { busType: 'standard', departureTime: '08:00', totalSeats: 32, layout: '2+2', priceMultiplier: 1 },
+  { busType: 'executive', departureTime: '11:00', totalSeats: 28, layout: '2+2', priceMultiplier: 1.25 },
+  { busType: 'luxury', departureTime: '15:00', totalSeats: 24, layout: '2+1', priceMultiplier: 1.5 },
 ];
 
-// Builds a seat array like [{ seatNumber: '1A', status: 'available' }, ...]
 const generateSeats = (totalSeats, layout) => {
   const rowSize = layout === '2+1' ? 3 : 4;
   const letters = layout === '2+1' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
@@ -57,6 +56,7 @@ const seedBuses = async () => {
           buses.push({
             route: route._id,
             busType: config.busType,
+            price: Math.round(route.price * config.priceMultiplier),
             departureDate,
             departureTime: config.departureTime,
             totalSeats: config.totalSeats,

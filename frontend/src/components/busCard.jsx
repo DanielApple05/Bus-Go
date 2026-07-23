@@ -19,7 +19,7 @@ const BusCard = ({ bus, onSelect }) => {
       </div>
 
       <div className="text-right shrink-0">
-        <div className="font-semibold text-slate-900">₦{bus.route?.price?.toLocaleString()}</div>
+        <div className="font-semibold text-slate-900">₦{bus.price.toLocaleString()}</div>
         <div className="text-xs text-slate-500 mb-1">Per Seat</div>
         <div className="text-xs text-slate-500">Available Seats</div>
         <div className="text-green-600 font-semibold text-sm mb-2">{availableSeats}</div>

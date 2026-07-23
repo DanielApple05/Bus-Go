@@ -27,8 +27,9 @@ const BookingSummary = () => {
   }
 
   const serviceFee = 1000 * booking.seatNumbers.length;
-  const roundTrip = booking.bus.route.price * 2
-  const total = booking.tripType === "one-way" ? booking.bus.route.price * booking.seatNumbers.length + serviceFee : roundTrip;
+  const roundTrip = booking.seatNumbers.length >= 1 ? booking.bus.price * 2 * booking.seatNumbers.length : booking.bus.route.price * 2
+
+  const total = booking.tripType === "one-way" ? booking.bus.price * booking.seatNumbers.length + serviceFee : roundTrip;
 
 
   const handlePay = () => {
@@ -55,7 +56,8 @@ const BookingSummary = () => {
             <Row label="Bus" value={booking.bus.busType} strong />
             <Row label="Departure" value={booking.bus.departureTime} />
             <Row label="Trip Type" value={booking.tripType} />
-            {booking.tripType === "round-trip" && <Row label="Returning" value={booking.returnDate} />}
+            {booking.tripType === "round-trip" && <Row label="Returning date" value={booking.returnDate} />}
+            {booking.tripType === "round-trip" && <Row label="Depature" value={booking.bus.departureTime} />}
           </Card>
 
           <Card title="Passenger Details">
@@ -69,8 +71,15 @@ const BookingSummary = () => {
 
           <div className="rounded-xl border border-slate-200 p-5">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Summary</h3>
-            <Row label="Ticket Price" value={`₦${booking.bus.route.price.toLocaleString()}`} />
-            {booking.tripType === "one-way" && <Row label="Service Fee" value={`₦${serviceFee.toLocaleString()}`} />}
+            <Row label="Ticket Price" value={`₦${booking.bus.price.toLocaleString()}`} />
+            <Row
+              label="Service Fee"
+              value={
+                booking.tripType === "one-way"
+                  ? `₦${serviceFee.toLocaleString()}`
+                  : "-"
+              }
+            />
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
               <span className="font-semibold text-slate-900">Total Amount</span>
               <span className="font-bold text-orange-600">₦{total.toLocaleString()}</span>
