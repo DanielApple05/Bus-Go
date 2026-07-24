@@ -57,7 +57,7 @@ const Buses = () => {
   return (
     <div>
       <Navbar />
-      <section className="text-center py-14 px-6 bg-slate-50">
+      <section className="text-center py-14 px-6 bg-slate-50 mt-20">
         <h1 className="text-4xl font-bold text-slate-900">Our Routes</h1>
         <p className="text-slate-500 mt-2">Travel to your favorite destinations with ease</p>
 

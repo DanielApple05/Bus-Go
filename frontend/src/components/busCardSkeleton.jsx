@@ -5,7 +5,6 @@ const BusCardSkeleton = () => {
         <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 animate-pulse">
           {/* Bus Image */}
           <div className="w-28 h-20 rounded-lg bg-slate-200 shrink-0" />
-
           {/* Bus Details */}
           <div className="flex-1">
             <div className="h-5 w-32 bg-slate-200 rounded mb-3" />
@@ -19,7 +18,6 @@ const BusCardSkeleton = () => {
 
             <div className="h-3 w-40 bg-slate-200 rounded" />
           </div>
-
           {/* Price & Button */}
           <div className="text-right shrink-0 flex flex-col items-end">
             <div className="h-5 w-20 bg-slate-200 rounded mb-2" />
