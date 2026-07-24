@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { BookingProvider } from './context/BookingContext';
+import { BookingProvider } from './context/bookingContext';
 import Index from './pages/index';
 import BusRoutes from './pages/routes';
 import AvailableBuses from './pages/buses';
