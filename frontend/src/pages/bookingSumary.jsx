@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Lock, ShieldCheck, Info } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import { useBooking } from '../context/BookingContext';
+import Navbar from '../components/navbar';
+import { useBooking } from '../context/bookingContext';
 
 const Card = ({ title, children }) => (
   <div className="rounded-xl border border-slate-200 p-5">

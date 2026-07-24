@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import SeatMap from '../components/SeatMap';
-import { useBooking } from '../context/BookingContext';
+import Navbar from '../components/navbar';
+import SeatMap from '../components/seatMap';
+import { useBooking } from '../context/bookingContext';
 import { createBooking } from '../../api/bookings';
 
 const Legend = ({ colorClass, label, filled }) => (

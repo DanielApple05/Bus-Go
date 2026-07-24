@@ -1,7 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import BusCard from '../components/BusCard';
-import { useBooking } from '../context/BookingContext';
+import Navbar from '../components/navbar';
+import BusCard from '../components/busCard';
+import { useBooking } from '../context/bookingContext';
 import { getAvailability } from '../../api/buses';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

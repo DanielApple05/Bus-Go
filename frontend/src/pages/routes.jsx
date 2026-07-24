@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ArrowLeftRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 import RouteCard from '../components/routeCard';
-import { useBooking } from '../context/BookingContext';
+import { useBooking } from '../context/bookingContext';
 import { useEffect } from 'react';
 import { getRoutes } from "../../api/routes";
 import RouteCardSkeleton from '../components/routeCardSkeleton';

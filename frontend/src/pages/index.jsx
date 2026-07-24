@@ -1,8 +1,8 @@
-import NavBar from "../components/Navbar";
-import Hero from "../components/Hero";
+import NavBar from "../components/navbar";
+import Hero from "../components/hero";
 import Features from "../components/features";
 import { useNavigate } from 'react-router-dom';
-import { useBooking } from '../context/BookingContext';
+import { useBooking } from '../context/bookingContext';
 
 const Index = () => {
 
