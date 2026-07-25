@@ -4,19 +4,14 @@ const BookingContext = createContext(null);
 
 const initialState = {
   tripType: "one-way",
-
-  // Outbound journey
   from: "",
   to: "",
   date: "",
   bus: null,
   seatNumber: [],
-
-  // Return journey
   returnDate: "",
   returnBus: null,
   returnSeatNumber: null,
-
   passenger: null,
   booking: null,
 };

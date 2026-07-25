@@ -6,6 +6,7 @@ import BusRoutes from './pages/routes';
 import AvailableBuses from './pages/buses';
 import BookingSummary from './pages/bookingSumary';
 import SeatSelection from './pages/seatSelection';
+import HireABus from './pages/hireABus';
 
 
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/buses" element={<AvailableBuses />} />
         <Route path="/summary" element={<BookingSummary />} />
         <Route path="/select-seat" element={<SeatSelection />} />
+        <Route path="/hire-bus" element={<HireABus />} />
       </Routes>
     </BookingProvider>
   );

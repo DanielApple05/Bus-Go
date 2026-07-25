@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Lock, ShieldCheck, Info } from 'lucide-react';
 import Navbar from '../components/navbar';
 import { useBooking } from '../context/bookingContext';
+import PaystackPop from '@paystack/inline-js';
 
 const Card = ({ title, children }) => (
   <div className="rounded-xl border border-slate-200 p-5">
@@ -17,7 +18,7 @@ const Row = ({ label, value, strong }) => (
   </div>
 );
 
-const BookingSummary = () => {
+const BookingSummary = () => { 
   const { booking } = useBooking();
   const navigate = useNavigate();
 
@@ -27,14 +28,26 @@ const BookingSummary = () => {
   }
 
   const serviceFee = 1000 * booking.seatNumbers.length;
-  const roundTrip = booking.seatNumbers.length >= 1 ? booking.bus.price * 2 * booking.seatNumbers.length : booking.bus.route.price * 2
-
+  const roundTrip = booking.seatNumbers.length >= 1 ? booking.bus.price * 2 * booking.seatNumbers.length : booking.bus.price * 2
   const total = booking.tripType === "one-way" ? booking.bus.price * booking.seatNumbers.length + serviceFee : roundTrip;
 
-
   const handlePay = () => {
-    // Paystack integration goes here — will call POST /confirm-booking on success
-    navigate('/confirmation');
+    const handler = window.PaystackPop.setup({
+      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+      email: booking.passenger.email,
+      amount: total * 100, // Paystack expects kobo, not naira
+      currency: 'NGN',
+      ref: `bus_${booking.booking._id}_${Date.now()}`,
+      callback: (response) => {
+        confirmBooking({ bookingId: booking.booking._id, paymentRef: response.reference })
+          .then(() => navigate('/confirmation'))
+          .catch(() => alert('Payment succeeded but confirmation failed — contact support.'));
+      },
+      onClose: () => {
+        console.log('Payment window closed');
+      },
+    });
+    handler.openIframe();
   };
 
   return (

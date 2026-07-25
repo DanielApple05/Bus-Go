@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { ArrowLeftRight, RefreshCw, Bus, MapPin, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const tripTypes = [
-  { id: 'one-way', label: 'One-way Trip', icon: ArrowLeftRight },
-  { id: 'round-trip', label: 'Round Trip', icon: RefreshCw },
-  { id: 'hire', label: 'Hire a Bus', icon: Bus },
+  { id: 'one-way', label: 'One-way Trip', icon: ArrowLeftRight, path: null },
+  { id: 'round-trip', label: 'Round Trip', icon: RefreshCw, path: null },
+  { id: 'hire', label: 'Hire a Bus', icon: Bus, path: "/hire-bus" },
 ];
 
 const TripSearchForm = ({ onSearch }) => {
+  const navigate = useNavigate();
   const [tripType, setTripType] = useState('one-way');
   const [form, setForm] = useState(
     {
@@ -41,13 +43,13 @@ const TripSearchForm = ({ onSearch }) => {
     <div className="bg-white rounded-2xl shadow-xl p-6">
       {/* Trip type tabs */}
       <div className="flex items-center gap-2 border-b border-slate-200 pb-4 mb-5">
-        {tripTypes.map(({ id, label, icon: Icon }) => (
+        {tripTypes.map(({ id, label, icon: Icon, path }) => (
           <button
             key={id}
-            onClick={() => setTripType(id)}
+            onClick={() => (path ? navigate(path) : setTripType(id))}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tripType === id
-              ? 'bg-orange-600 text-white'
-              : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-orange-600 text-white'
+                : 'text-slate-600 hover:bg-slate-50'
               }`}
           >
             <Icon size={16} />
