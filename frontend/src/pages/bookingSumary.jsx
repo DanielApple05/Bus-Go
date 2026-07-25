@@ -18,7 +18,7 @@ const Row = ({ label, value, strong }) => (
   </div>
 );
 
-const BookingSummary = () => { 
+const BookingSummary = () => {
   const { booking } = useBooking();
   const navigate = useNavigate();
 
@@ -32,22 +32,20 @@ const BookingSummary = () => {
   const total = booking.tripType === "one-way" ? booking.bus.price * booking.seatNumbers.length + serviceFee : roundTrip;
 
   const handlePay = () => {
-    const handler = window.PaystackPop.setup({
+    const paystack = new PaystackPop();
+    paystack.newTransaction({
       key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
       email: booking.passenger.email,
-      amount: total * 100, // Paystack expects kobo, not naira
+      amount: total * 100,
       currency: 'NGN',
-      ref: `bus_${booking.booking._id}_${Date.now()}`,
-      callback: (response) => {
-        confirmBooking({ bookingId: booking.booking._id, paymentRef: response.reference })
+      reference: `bus_${booking.booking._id}_${Date.now()}`,
+      onSuccess: (transaction) => {
+        confirmBooking({ bookingId: booking.booking._id, paymentRef: transaction.reference })
           .then(() => navigate('/confirmation'))
           .catch(() => alert('Payment succeeded but confirmation failed — contact support.'));
       },
-      onClose: () => {
-        console.log('Payment window closed');
-      },
+      onCancel: () => console.log('Payment window closed'),
     });
-    handler.openIframe();
   };
 
   return (
