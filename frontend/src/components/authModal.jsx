@@ -17,6 +17,7 @@ const AuthModal = ({ open, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     setError(null);
     setSubmitting(true);
     try {
@@ -28,7 +29,7 @@ const AuthModal = ({ open, onClose }) => {
       login(result.token, result.user);
       onClose();
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong.');
+      setError(err.response?.data?.message || err.message || 'Something went wrong.');
     } finally {
       setSubmitting(false);
     }
