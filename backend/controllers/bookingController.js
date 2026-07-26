@@ -1,6 +1,7 @@
 const Bus = require("../models/Bus");
 const Route = require("../models/Route");
 const Booking = require("../models/Booking");
+const User = require("../models/User");
 
 const HOLD_DURATION_MS = 10 * 60 * 1000;
 
