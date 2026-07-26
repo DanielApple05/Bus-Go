@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <circle cx="256" cy="256" r="240" fill="#F97316"></circle>
+
+  <!-- Road -->
+  <path d="M90 325c55 0 90 18 140 42 20 10 45 18 72 18h120" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"></path>
+
+  <!-- Bus Body -->
+  <path d="M135 205
+           C135 180 150 165 175 152
+           L285 92
+           C320 74 382 76 412 96
+           C430 108 438 124 438 148
+           V285
+           C438 300 427 312 412 312
+           H165
+           C148 312 135 299 135 282Z" fill="#FFFFFF"></path>
+
+  <!-- Windows -->
+  <path d="M170 175
+           L285 115
+           C310 102 368 103 392 118
+           C405 126 412 136 412 150
+           V236
+           H250
+           V182
+           Z" fill="#0F172A"></path>
+
+  <path d="M250 182
+           H412
+           V236
+           H250
+           Z" fill="#0F172A"></path>
+
+  <!-- Orange Stripe -->
+  <path d="M170 235
+           C215 220 255 228 290 265
+           C305 280 315 295 325 312
+           H285
+           C270 285 240 255 205 248
+           C190 245 178 246 165 252Z" fill="#F97316"></path>
+
+  <!-- Headlights -->
+  <ellipse cx="355" cy="270" rx="18" ry="8" fill="#0F172A"></ellipse>
+  <ellipse cx="395" cy="270" rx="18" ry="8" fill="#0F172A"></ellipse>
+
+  <!-- Grill -->
+  <rect x="300" y="276" width="65" height="8" rx="4" fill="#0F172A"></rect>
+
+  <!-- Wheels -->
+  <circle cx="180" cy="312" r="26" fill="#0F172A"></circle>
+  <circle cx="180" cy="312" r="12" fill="#FFFFFF"></circle>
+
+  <circle cx="300" cy="312" r="26" fill="#0F172A"></circle>
+  <circle cx="300" cy="312" r="12" fill="#FFFFFF"></circle>
+</svg>
