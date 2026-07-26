@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { MapPin, ArrowLeftRight } from 'lucide-react';
 import Navbar from '../components/navbar';
 import RouteCard from '../components/routeCard';
@@ -61,7 +61,7 @@ const Buses = () => {
         <h1 className="text-4xl font-bold text-slate-900">Our Routes</h1>
         <p className="text-slate-500 mt-2">Travel to your favorite destinations with ease</p>
 
-        <form onSubmit={handleSearch} className="max-w-2xl mx-auto mt-8 bg-white rounded-xl shadow-md p-3 flex items-center gap-3">
+        <form onSubmit={handleSearch} className="max-w-2xl mx-auto mt-8 bg-white rounded-xl shadow-md p-3 xl:flex grid items-center gap-3">
           <div className="flex items-center gap-2 px-3 h-11 flex-1 rounded-lg border border-slate-200">
             <MapPin size={16} className="text-slate-400 shrink-0" />
             <input
@@ -72,7 +72,7 @@ const Buses = () => {
               onChange={(e) => setFrom(e.target.value)}
             />
           </div>
-          <ArrowLeftRight size={16} className="text-slate-400 shrink-0" />
+          <ArrowLeftRight size={16} className="text-slate-400 shrink-0 " />
           <div className="flex items-center gap-2 px-3 h-11 flex-1 rounded-lg border border-slate-200">
             <MapPin size={16} className="text-slate-400 shrink-0" />
             <input
@@ -102,15 +102,17 @@ const Buses = () => {
           </div>}
       </section>
 
-      <section className="max-w-4xl mx-auto mb-12 px-6">
-        <div className="bg-orange-50 rounded-2xl p-8 flex items-center justify-between">
-          <div>
+      <section className="max-w-full mx-auto mb-12 xl:px-6 p-2">
+        <div className="bg-orange-50 rounded-2xl p-8 grid items-center justify-between">
+          
             <h3 className="text-xl font-bold text-slate-900">Hire a Bus</h3>
             <p className="text-slate-600 text-sm mt-1">Planning a group trip, event or tour? Hire a bus that fits your needs.</p>
-            <button className="mt-4 px-5 py-2.5 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700">
+            <Link
+            to={'/hire-bus'}
+             className="mt-4 px-5 py-2.5 text-center rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700">
               Hire a Bus
-            </button>
-          </div>
+            </Link>
+          
         </div>
       </section>
     </div>

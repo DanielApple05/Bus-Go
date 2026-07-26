@@ -1,5 +1,5 @@
 import { Bus, Headphones, Menu } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import AuthModal from './authModal';
 import MobileNav from './mobileNav';
@@ -16,14 +16,17 @@ const NavBar = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
       <header className="flex items-center justify-between xl:px-10 p-5 h-20 bg-white fixed z-30 w-full top-0">
-        <div className="flex items-center gap-2">
+        <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-2">
           <Bus className="text-orange-600" size={26} strokeWidth={2.5} />
           <span className="text-xl font-bold text-slate-900">Bus<span className="text-orange-600">Go</span></span>
-        </div>
+        </button>
 
         <nav className="xl:flex hidden gap-8">
           {navLinks.map(({ tab, path }) => (

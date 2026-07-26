@@ -6,7 +6,7 @@ const BusCard = ({ bus, onSelect }) => {
   return (
     <div className={`flex items-center gap-4 p-4 rounded-xl border ${bus.isBookable ? 'border-slate-200' : 'border-slate-100 opacity-50'}`}>
       <div className="w-28 h-20 rounded-lg bg-slate-100 shrink-0" />
-      <div className="flex-1">
+      <div className=" flex-1">
         <h3 className="font-semibold text-slate-900 capitalize">{bus.busType}</h3>
         <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
           <span className="flex items-center gap-1"><Users size={12} /> {bus.totalSeats} Seats</span>
