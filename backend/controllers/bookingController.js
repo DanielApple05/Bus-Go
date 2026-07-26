@@ -124,39 +124,47 @@ const confirmBooking = async (req, res) => {
   try {
     const { bookingId, paymentRef } = req.body;
     if (!bookingId || !paymentRef) {
-      return res.status(400).json({ message: 'bookingId and paymentRef are required' });
+      return res
+        .status(400)
+        .json({ message: "bookingId and paymentRef are required" });
     }
 
     const booking = await Booking.findById(bookingId);
-    if (!booking) return res.status(404).json({ message: 'Booking not found' });
-    if (booking.status === 'confirmed') {
-      return res.status(400).json({ message: 'Booking already confirmed' });
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+    if (booking.status === "confirmed") {
+      return res.status(400).json({ message: "Booking already confirmed" });
     }
 
     // Verify the payment actually happened, server-side, before trusting it
-    const verifyRes = await fetch(`https://api.paystack.co/transaction/verify/${paymentRef}`, {
-      headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` },
-    });
+    const verifyRes = await fetch(
+      `https://api.paystack.co/transaction/verify/${paymentRef}`,
+      {
+        headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` },
+      },
+    );
     const verifyData = await verifyRes.json();
 
-    if (!verifyData.status || verifyData.data.status !== 'success') {
-      return res.status(400).json({ message: 'Payment could not be verified' });
+    if (!verifyData.status || verifyData.data.status !== "success") {
+      return res.status(400).json({ message: "Payment could not be verified" });
     }
 
     // Extra safety: confirm the amount paid actually matches what we expected
     const expectedKobo = booking.totalPrice * 100;
     if (verifyData.data.amount !== expectedKobo) {
-      return res.status(400).json({ message: 'Payment amount mismatch' });
+      return res.status(400).json({ message: "Payment amount mismatch" });
     }
 
     const bus = await Bus.findById(booking.bus);
     booking.seatNumbers.forEach((seatNum) => {
       const seat = bus.seats.find((s) => s.seatNumber === seatNum);
-      if (seat) { seat.status = 'booked'; seat.heldUntil = null; }
+      if (seat) {
+        seat.status = "booked";
+        seat.heldUntil = null;
+      }
     });
     await bus.save();
 
-    booking.status = 'confirmed';
+    booking.status = "confirmed";
     booking.paymentRef = paymentRef;
     await booking.save();
 
@@ -166,4 +174,20 @@ const confirmBooking = async (req, res) => {
   }
 };
 
-module.exports = { getAvailability, createBooking, confirmBooking };
+const getMyBookings = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const bookings = await Booking.find({ "passenger.email": user.email })
+      .populate("route")
+      .populate("bus")
+      .sort({ createdAt: -1 });
+
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { getAvailability, createBooking, confirmBooking, getMyBookings };

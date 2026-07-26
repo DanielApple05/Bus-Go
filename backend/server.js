@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const routeRoutes = require('./routes/routes');
 const busRoutes = require('./routes/buses');
 const bookingRoutes = require('./routes/bookings');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/routes', routeRoutes);
 app.use('/api/buses', busRoutes);
 app.use('/api', bookingRoutes); // handles /availability, /booking, /confirm-booking
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => res.send('Bus Booking API running'));
 

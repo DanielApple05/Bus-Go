@@ -41,10 +41,13 @@ const BookingSummary = () => {
       reference: `bus_${booking.booking._id}_${Date.now()}`,
       onSuccess: (transaction) => {
         confirmBooking({ bookingId: booking.booking._id, paymentRef: transaction.reference })
-          .then(() => navigate('/confirmation'))
+          .then(() => {
+            const savedIds = JSON.parse(localStorage.getItem('myBookings') || '[]');
+            localStorage.setItem('myBookings', JSON.stringify([...savedIds, booking.booking._id]));
+            navigate('/confirmation');
+          })
           .catch(() => alert('Payment succeeded but confirmation failed — contact support.'));
       },
-      onCancel: () => console.log('Payment window closed'),
     });
   };
 
