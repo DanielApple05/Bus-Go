@@ -82,10 +82,11 @@ const createBooking = async (req, res) => {
 
     const bus = await Bus.findById(busId).populate("route");
     if (!bus) return res.status(404).json({ message: "Bus not found" });
-    const startOfDay = new Date(date);
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(date);
-    endOfDay.setHours(23, 59, 59, 999);
+
+    const [hours, minutes] = bus.departureTime.split(":").map(Number);
+    const departureDateTime = new Date(bus.departureDate);
+    departureDateTime.setUTCHours(hours, minutes, 0, 0);
+
     if (departureDateTime <= new Date()) {
       return res.status(400).json({
         message: "This bus has already departed and can no longer be booked",

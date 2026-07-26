@@ -40,7 +40,7 @@ const TripSearchForm = ({ onSearch }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6">
+    <div className="bg-white rounded-2xl shadow-xl p-6 max-h-auto ">
       {/* Trip type tabs */}
       <div className="flex items-center gap-2 border-b border-slate-200 pb-4 mb-5">
         {tripTypes.map(({ id, label, icon: Icon, path }) => (
