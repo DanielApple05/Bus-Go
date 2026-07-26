@@ -1,19 +1,37 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const Route = require('./models/Route');
-const Bus = require('./models/Bus');
+require("dotenv").config();
+const mongoose = require("mongoose");
+const Route = require("./models/Route");
+const Bus = require("./models/Bus");
 
 const DAYS_AHEAD = 5;
 
 const busConfigs = [
-  { busType: 'standard', departureTime: '08:00', totalSeats: 32, layout: '2+2', priceMultiplier: 1 },
-  { busType: 'executive', departureTime: '11:00', totalSeats: 28, layout: '2+2', priceMultiplier: 1.25 },
-  { busType: 'luxury', departureTime: '15:00', totalSeats: 24, layout: '2+1', priceMultiplier: 1.5 },
+  {
+    busType: "standard",
+    departureTime: "08:00",
+    totalSeats: 32,
+    layout: "2+2",
+    priceMultiplier: 1,
+  },
+  {
+    busType: "executive",
+    departureTime: "11:00",
+    totalSeats: 28,
+    layout: "2+2",
+    priceMultiplier: 1.25,
+  },
+  {
+    busType: "luxury",
+    departureTime: "15:00",
+    totalSeats: 24,
+    layout: "2+1",
+    priceMultiplier: 1.5,
+  },
 ];
 
 const generateSeats = (totalSeats, layout) => {
-  const rowSize = layout === '2+1' ? 3 : 4;
-  const letters = layout === '2+1' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
+  const rowSize = layout === "2+1" ? 3 : 4;
+  const letters = layout === "2+1" ? ["A", "B", "C"] : ["A", "B", "C", "D"];
   const rows = Math.ceil(totalSeats / rowSize);
 
   const seats = [];
@@ -22,18 +40,18 @@ const generateSeats = (totalSeats, layout) => {
       if (seats.length >= totalSeats) break;
       seats.push({
         seatNumber: `${row}${letters[col]}`,
-        status: Math.random() < 0.15 ? 'booked' : 'available', // ~15% pre-booked for realism
+        status: Math.random() < 0.15 ? "booked" : "available", // ~15% pre-booked for realism
         heldUntil: null,
       });
     }
   }
   return seats;
-}
+};
 
 const seedBuses = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
 
     const routes = await Route.find();
     if (!routes.length) {
@@ -48,9 +66,17 @@ const seedBuses = async () => {
 
     for (const route of routes) {
       for (let dayOffset = 0; dayOffset < DAYS_AHEAD; dayOffset++) {
-        const departureDate = new Date(today);
-        departureDate.setDate(today.getDate() + dayOffset);
-        departureDate.setHours(0, 0, 0, 0);
+        const departureDate = new Date(
+          Date.UTC(
+            today.getUTCFullYear(),
+            today.getUTCMonth(),
+            today.getUTCDate() + dayOffset,
+            0,
+            0,
+            0,
+            0,
+          ),
+        );
 
         for (const config of busConfigs) {
           buses.push({
@@ -70,7 +96,7 @@ const seedBuses = async () => {
     console.log(`Seeded ${buses.length} buses across ${routes.length} routes`);
     process.exit(0);
   } catch (err) {
-    console.error('Bus seed failed:', err.message);
+    console.error("Bus seed failed:", err.message);
     process.exit(1);
   }
 };

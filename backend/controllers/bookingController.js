@@ -23,10 +23,9 @@ const getAvailability = async (req, res) => {
         .status(404)
         .json({ message: "No route found for this from/to" });
 
-    const startOfDay = new Date(date);
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(date);
-    endOfDay.setHours(23, 59, 59, 999);
+    const [year, month, day] = date.split("-").map(Number);
+    const startOfDay = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+    const endOfDay = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));
 
     const buses = await Bus.find({
       route: route._id,
@@ -50,7 +49,7 @@ const getAvailability = async (req, res) => {
     const busesWithAvailability = buses.map((bus) => {
       const [hours, minutes] = bus.departureTime.split(":").map(Number);
       const departureDateTime = new Date(bus.departureDate);
-      departureDateTime.setHours(hours, minutes, 0, 0);
+      departureDateTime.setUTCHours(hours, minutes, 0, 0);
 
       return {
         ...bus.toObject(),
@@ -83,16 +82,14 @@ const createBooking = async (req, res) => {
 
     const bus = await Bus.findById(busId).populate("route");
     if (!bus) return res.status(404).json({ message: "Bus not found" });
-    const [hours, minutes] = bus.departureTime.split(":").map(Number);
-    const departureDateTime = new Date(bus.departureDate);
-    departureDateTime.setHours(hours, minutes, 0, 0);
-
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
     if (departureDateTime <= new Date()) {
-      return res
-        .status(400)
-        .json({
-          message: "This bus has already departed and can no longer be booked",
-        });
+      return res.status(400).json({
+        message: "This bus has already departed and can no longer be booked",
+      });
     }
 
     const now = new Date();
