@@ -1,7 +1,8 @@
-import { Bus, Headphones } from 'lucide-react';
+import { Bus, Headphones, Menu } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 import AuthModal from './authModal';
+import MobileNav from './mobileNav';
 import { useState } from 'react';
 
 const navLinks = [
@@ -12,19 +13,19 @@ const navLinks = [
 ];
 
 const NavBar = () => {
-
   const [modalOpen, setModalOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
 
   return (
     <>
-      <header className="flex items-center justify-between xl:px-10 p-5 h-20 bg-white fixed z-30 w-full top-0  ">
+      <header className="flex items-center justify-between xl:px-10 p-5 h-20 bg-white fixed z-30 w-full top-0">
         <div className="flex items-center gap-2">
           <Bus className="text-orange-600" size={26} strokeWidth={2.5} />
           <span className="text-xl font-bold text-slate-900">Bus<span className="text-orange-600">Go</span></span>
         </div>
 
-        <nav className=" xl:flex hidden gap-8  ">
+        <nav className="xl:flex hidden gap-8">
           {navLinks.map(({ tab, path }) => (
             <NavLink
               to={path}
@@ -39,7 +40,7 @@ const NavBar = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="xl:flex hidden items-center gap-4">
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-700">Hi, {user.name.split(' ')[0]}</span>
@@ -58,8 +59,27 @@ const NavBar = () => {
             </>
           )}
         </div>
+
+        <button
+          onClick={() => setMobileNavOpen(true)}
+          className="xl:hidden text-slate-700 hover:text-orange-600"
+          aria-label="Open menu"
+        >
+          { modalOpen ?
+            <X size={22} /> : <Menu size={26} />}
+        </button>
+
         <AuthModal open={modalOpen} onClose={() => setModalOpen(false)} />
-      </header >
+      </header>
+
+      <MobileNav
+        open={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
+        isLoggedIn={isLoggedIn}
+        user={user}
+        logout={logout}
+        onAuthClick={() => setModalOpen(true)}
+      />
     </>
   );
 }

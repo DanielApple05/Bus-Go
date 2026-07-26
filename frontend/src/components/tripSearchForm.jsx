@@ -42,12 +42,12 @@ const TripSearchForm = ({ onSearch }) => {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 max-h-auto ">
       {/* Trip type tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-4 mb-5">
+      <div className="flex items-center gap-2 border-b border-slate-200 pb-4  mb-5">
         {tripTypes.map(({ id, label, icon: Icon, path }) => (
           <button
             key={id}
             onClick={() => (path ? navigate(path) : setTripType(id))}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tripType === id
+            className={` xl:flex grid items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tripType === id
                 ? 'bg-orange-600 text-white'
                 : 'text-slate-600 hover:bg-slate-50'
               }`}
