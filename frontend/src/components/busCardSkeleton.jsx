@@ -1,8 +1,8 @@
 const BusCardSkeleton = () => {
   return (
     <div className="space-y-4 mt-6">
-      {[...Array(3)].map((_, index) => (
-        <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 animate-pulse">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div key={index} className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 animate-pulse">
           {/* Bus Image */}
           <div className="w-28 h-20 rounded-lg bg-slate-200 shrink-0" />
           {/* Bus Details */}

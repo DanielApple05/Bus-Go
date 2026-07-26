@@ -46,14 +46,7 @@ const getAvailability = async (req, res) => {
       if (changed) await bus.save();
     }
 
-    const upcomingBuses = buses.filter((bus) => {
-      const [hours, minutes] = bus.departureTime.split(":").map(Number);
-      const departureDateTime = new Date(bus.departureDate);
-      departureDateTime.setHours(hours, minutes, 0, 0);
-      return departureDateTime > now;
-    });
-
-    res.json(upcomingBuses);
+    res.json(buses);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -196,9 +189,4 @@ const getMyBookings = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAvailability,
-  createBooking,
-  confirmBooking,
-  getMyBookings,
-};
+module.exports = { getAvailability, createBooking, confirmBooking, getMyBookings };

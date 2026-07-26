@@ -2,7 +2,7 @@ const RouteCardSkeleton = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {Array.from({ length: 6 }).map((_, index) => (
-        <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 animate-pulse">
+        <div key={index} className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 animate-pulse">
           {/* Icon */}
           <div className="w-14 h-14 rounded-lg bg-slate-200 shrink-0" />
 
