@@ -27,7 +27,6 @@ const AvailableBuses = ({ route, date, onBack }) => {
       try {
         setLoading(true)
         const data = await getAvailability(booking.from, booking.to, booking.date);
-        console.log(data);
         setBuses(data);
       } catch (error) {
         console.error(error);

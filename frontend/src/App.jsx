@@ -9,6 +9,7 @@ import BookingSummary from './pages/bookingSumary';
 import SeatSelection from './pages/seatSelection';
 import HireABus from './pages/hireABus';
 import MyBookings from './pages/myBooking';
+import ComingSoon from './pages/comingSoon';
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/select-seat" element={<SeatSelection />} />
         <Route path="/hire-bus" element={<HireABus />} />
         <Route path="/booking" element={<MyBookings />} />
+         <Route path="/coming-soon" element={<ComingSoon />} />
       </Routes>
     </BookingProvider>
     </AuthProvider > 

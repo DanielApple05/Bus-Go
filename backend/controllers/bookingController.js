@@ -46,7 +46,14 @@ const getAvailability = async (req, res) => {
       if (changed) await bus.save();
     }
 
-    res.json(buses);
+    const upcomingBuses = buses.filter((bus) => {
+      const [hours, minutes] = bus.departureTime.split(":").map(Number);
+      const departureDateTime = new Date(bus.departureDate);
+      departureDateTime.setHours(hours, minutes, 0, 0);
+      return departureDateTime > now;
+    });
+
+    res.json(upcomingBuses);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -120,7 +127,6 @@ const createBooking = async (req, res) => {
   }
 };
 
-// controllers/bookingController.js
 const confirmBooking = async (req, res) => {
   try {
     const { bookingId, paymentRef } = req.body;
@@ -136,7 +142,6 @@ const confirmBooking = async (req, res) => {
       return res.status(400).json({ message: "Booking already confirmed" });
     }
 
-    // Verify the payment actually happened, server-side, before trusting it
     const verifyRes = await fetch(
       `https://api.paystack.co/transaction/verify/${paymentRef}`,
       {
@@ -191,4 +196,9 @@ const getMyBookings = async (req, res) => {
   }
 };
 
-module.exports = { getAvailability, createBooking, confirmBooking, getMyBookings };
+module.exports = {
+  getAvailability,
+  createBooking,
+  confirmBooking,
+  getMyBookings,
+};

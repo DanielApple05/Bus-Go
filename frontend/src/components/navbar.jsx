@@ -8,7 +8,6 @@ const navLinks = [
   { tab: 'Home', path: "/" },
   { tab: 'My Bookings', path: "/booking" },
   { tab: 'Routes', path: "/routes" },
-  { tab: 'About', path: "/coming-soon" },
   { tab: 'contact', path: "/coming-soon" }
 ];
 
@@ -41,10 +40,6 @@ const NavBar = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 text-sm text-slate-700 hover:text-orange-600">
-            <Headphones size={18} />
-            Help
-          </button>
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-700">Hi, {user.name.split(' ')[0]}</span>

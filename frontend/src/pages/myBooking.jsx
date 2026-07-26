@@ -19,11 +19,28 @@ const MyBookings = () => {
 const { token, isLoggedIn } = useAuth();
 
 useEffect(() => {
-  if (!isLoggedIn) { setLoading(false); return; }
-  API.get('/bookings/mine', { headers: { Authorization: `Bearer ${token}` } })
-    .then(({ data }) => setBookings(data))
-    .catch(console.error)
-    .finally(() => setLoading(false));
+  if (!isLoggedIn) {
+    setLoading(false);
+    return;
+  }
+
+  const fetchBookings = async () => {
+    try {
+      setLoading(true);
+      const { data } = await API.get("/bookings/mine", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setBookings(data);
+    } catch (error) {
+      console.error("Failed to fetch bookings:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchBookings();
 }, [isLoggedIn, token]);
 
   return (
