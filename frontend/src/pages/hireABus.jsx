@@ -19,7 +19,6 @@ const HireABus = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // No backend endpoint for this yet — see note below
     console.log('Hire request:', form);
     setSubmitted(true);
   };

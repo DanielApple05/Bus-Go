@@ -121,7 +121,7 @@ const createBooking = async (req, res) => {
     });
     await bus.save();
 
-    const totalPrice = bus.route.price * seatNumbers.length;
+    const totalPrice = bus.price * seatNumbers.length;
 
     const booking = await Booking.create({
       tripType,

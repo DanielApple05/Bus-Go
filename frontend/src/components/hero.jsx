@@ -2,7 +2,7 @@ import TripSearchForm from './tripSearchForm';
 
 const Hero = ({ onSearch }) => {
   return (
-    <section className=" h-screen mt-20 relative bg-linear-to-br from-slate-800 via-slate-700 to-orange-900 p-14 overflow-hidden grid ">
+    <section className=" h-screen mt-20 relative bg-linear-to-br from-slate-800 via-slate-700 to-orange-900 xl:p-14 p-5 overflow-hidden grid ">
       <div className="relative max-w-2xl">
         <h1 className="text-5xl font-bold text-white leading-tight">
           Your Journey,<br />Our Priority<span className="text-orange-500">.</span>

@@ -53,7 +53,7 @@ const SeatSelection = () => {
     );
   };
 
-  const total = selected.length * bus.route.price;
+  const total = selected.length * bus.price;
   const canContinue = selected.length > 0 && passenger.name && passenger.email && passenger.phone && !submitting;
 
   const handleChange = (field) => (e) =>

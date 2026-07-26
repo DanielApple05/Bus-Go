@@ -59,16 +59,15 @@ const seedBuses = async () => {
       process.exit(1);
     }
 
-    
-  console.log("Database:", mongoose.connection.name);
+    console.log("Database:", mongoose.connection.name);
 
-const before = await Bus.countDocuments();
-console.log("Buses before delete:", before);
+    const before = await Bus.countDocuments();
+    console.log("Buses before delete:", before);
 
-await Bus.deleteMany({});
+    await Bus.deleteMany({});
 
-const afterDelete = await Bus.countDocuments();
-console.log("Buses after delete:", afterDelete);
+    const afterDelete = await Bus.countDocuments();
+    console.log("Buses after delete:", afterDelete);
 
     const buses = [];
     const today = new Date();
@@ -102,17 +101,17 @@ console.log("Buses after delete:", afterDelete);
       }
     }
 
-   await Bus.insertMany(buses);
+    await Bus.insertMany(buses);
 
-const afterInsert = await Bus.countDocuments();
-console.log("Buses after insert:", afterInsert);
+    const afterInsert = await Bus.countDocuments();
+    console.log("Buses after insert:", afterInsert);
 
-console.log(
-  buses.slice(0, 5).map((bus) => ({
-    date: bus.departureDate,
-    time: bus.departureTime,
-  }))
-);
+    console.log(
+      buses.slice(0, 5).map((bus) => ({
+        date: bus.departureDate,
+        time: bus.departureTime,
+      })),
+    );
     console.log(`Seeded ${buses.length} buses across ${routes.length} routes`);
     process.exit(0);
   } catch (err) {

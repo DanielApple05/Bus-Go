@@ -69,7 +69,7 @@ useEffect(() => {
             <div key={b._id} className="rounded-xl border border-slate-200 p-5">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-slate-900">
-                  {b.route.from} &rarr; {b.route.to}
+                  {b.route?.from} &rarr; {b.route?.to}
                 </h3>
                 <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${statusStyles[b.status]}`}>
                   {b.status}
@@ -78,7 +78,7 @@ useEffect(() => {
 
               <div className="flex items-center gap-4 text-sm text-slate-500 mt-3">
                 <span className="flex items-center gap-1"><Calendar size={14} /> {new Date(b.travelDate).toLocaleDateString()}</span>
-                <span className="flex items-center gap-1"><Bus size={14} /> {b.bus.busType}</span>
+                <span className="flex items-center gap-1"><Bus size={14} /> {b.bus?.busType}</span>
                 <span className="flex items-center gap-1"><Armchair size={14} /> {b.seatNumbers.join(', ')}</span>
               </div>
 

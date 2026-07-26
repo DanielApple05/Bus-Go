@@ -18,13 +18,13 @@ const NavBar = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between px-10 h-20 bg-white fixed z-30 w-full top-0  ">
+      <header className="flex items-center justify-between xl:px-10 p-5 h-20 bg-white fixed z-30 w-full top-0  ">
         <div className="flex items-center gap-2">
           <Bus className="text-orange-600" size={26} strokeWidth={2.5} />
           <span className="text-xl font-bold text-slate-900">Bus<span className="text-orange-600">Go</span></span>
         </div>
 
-        <nav className="flex gap-8  ">
+        <nav className=" xl:flex hidden gap-8  ">
           {navLinks.map(({ tab, path }) => (
             <NavLink
               to={path}
