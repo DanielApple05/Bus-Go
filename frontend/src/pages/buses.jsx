@@ -7,9 +7,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BusCardSkeleton from '../components/busCardSkeleton';
 
-
-
-const AvailableBuses = ({ route, date, onBack }) => {
+const AvailableBuses = ({ route, date }) => {
 
    const navigate = useNavigate();
   const { booking, updateBooking } = useBooking();
@@ -42,8 +40,8 @@ const AvailableBuses = ({ route, date, onBack }) => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-4xl mx-auto px-6 py-10">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
+      <div className="max-w-4xl mx-auto px-6 py-10 mt-20">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
           <ArrowLeft size={18} />
         </button>
         <h1 className="text-2xl font-bold text-slate-900">Available Buses</h1>
