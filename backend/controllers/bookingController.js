@@ -34,6 +34,7 @@ const getAvailability = async (req, res) => {
     }).populate("route");
 
     const now = new Date();
+
     for (const bus of buses) {
       let changed = false;
       bus.seats.forEach((seat) => {
@@ -46,7 +47,18 @@ const getAvailability = async (req, res) => {
       if (changed) await bus.save();
     }
 
-    res.json(buses);
+    const busesWithAvailability = buses.map((bus) => {
+      const [hours, minutes] = bus.departureTime.split(":").map(Number);
+      const departureDateTime = new Date(bus.departureDate);
+      departureDateTime.setHours(hours, minutes, 0, 0);
+
+      return {
+        ...bus.toObject(),
+        isBookable: departureDateTime > now,
+      };
+    });
+
+    res.json(busesWithAvailability);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -71,6 +83,17 @@ const createBooking = async (req, res) => {
 
     const bus = await Bus.findById(busId).populate("route");
     if (!bus) return res.status(404).json({ message: "Bus not found" });
+    const [hours, minutes] = bus.departureTime.split(":").map(Number);
+    const departureDateTime = new Date(bus.departureDate);
+    departureDateTime.setHours(hours, minutes, 0, 0);
+
+    if (departureDateTime <= new Date()) {
+      return res
+        .status(400)
+        .json({
+          message: "This bus has already departed and can no longer be booked",
+        });
+    }
 
     const now = new Date();
     const unavailable = [];
@@ -189,4 +212,9 @@ const getMyBookings = async (req, res) => {
   }
 };
 
-module.exports = { getAvailability, createBooking, confirmBooking, getMyBookings };
+module.exports = {
+  getAvailability,
+  createBooking,
+  confirmBooking,
+  getMyBookings,
+};
