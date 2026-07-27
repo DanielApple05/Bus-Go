@@ -11,6 +11,7 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
     const fetchCities = async () => {
       try {
         const response = await fetchCities();
+        console.log(response)
         setCities(response);
       } catch (error) {
         console.log(error)
