@@ -51,7 +51,7 @@ Guest checkout is fully supported because I wanted the booking process to be as 
 ### Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/DanielApple05/Bus-Go
 cd bus-go
 ```
 
