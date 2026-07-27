@@ -10,13 +10,13 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await fetchCities();
-        console.log(response)
+        const response = await getCities();
         setCities(response);
       } catch (error) {
         console.log(error)
       }
     }
+    fetchCities();
   }, []);
 
   useEffect(() => {
