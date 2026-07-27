@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeftRight, RefreshCw, Bus, MapPin, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import LocationAutocomplete from './locationAutoComplete';
 
 const tripTypes = [
   { id: 'one-way', label: 'One-way Trip', icon: ArrowLeftRight, path: null },
@@ -48,8 +49,8 @@ const TripSearchForm = ({ onSearch }) => {
             key={id}
             onClick={() => (path ? navigate(path) : setTripType(id))}
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${tripType === id
-                ? 'bg-orange-600 text-white'
-                : 'text-slate-600 hover:bg-slate-50'
+              ? 'bg-orange-600 text-white'
+              : 'text-slate-600 hover:bg-slate-50'
               }`}
           >
             <Icon size={14} className="sm:hidden" />
@@ -63,19 +64,12 @@ const TripSearchForm = ({ onSearch }) => {
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_1fr_1fr_auto] gap-4 items-end ">
 
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-slate-800"> From</label>
-          <div className="flex items-center gap-2 px-3 h-11 rounded-lg border border-slate-200 bg-slate-50 focus-within:border-orange-600">
-            <MapPin size={16} className="text-slate-400 shrink-0" />
-            <input
-              icon={MapPin}
-              placeholder="Departure location"
-              value={form.from}
-              onChange={handleChange('from')}
-              className="w-full bg-transparent text-base outline-none placeholder:text-slate-400"
-            />
-          </div>
-        </div>
+        <LocationAutocomplete
+          label="From"
+          placeholder="Departure location"
+          value={form.from}
+          onChange={(val) => setForm((prev) => ({ ...prev, from: val }))}
+        />
 
         <div
           onClick={swapLocations}
@@ -84,20 +78,12 @@ const TripSearchForm = ({ onSearch }) => {
           <ArrowLeftRight size={16} />
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-slate-800"> To</label>
-          <div className="flex items-center gap-2 px-3 h-11 rounded-lg border border-slate-200 bg-slate-50 focus-within:border-orange-600">
-            <MapPin size={16} className="text-slate-400 shrink-0" />
-            <input
-              label="To"
-              icon={MapPin}
-              placeholder="Destination"
-              value={form.to}
-              onChange={handleChange('to')}
-              className="w-full bg-transparent text-base outline-none placeholder:text-slate-400"
-            />
-          </div >
-        </div>
+        <LocationAutocomplete
+          label="To"
+          placeholder="Destination"
+          value={form.to}
+          onChange={(val) => setForm((prev) => ({ ...prev, to: val }))}
+        />
 
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium text-slate-800"> Departure Date</label>

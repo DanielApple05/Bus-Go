@@ -7,6 +7,7 @@ import { useBooking } from '../context/bookingContext';
 import { useEffect } from 'react';
 import { getRoutes } from "../../api/routes";
 import RouteCardSkeleton from '../components/routeCardSkeleton';
+import LocationAutocomplete from '../components/locationAutoComplete';
 
 
 const Buses = () => {
@@ -65,27 +66,9 @@ const Buses = () => {
         <p className="text-slate-500 mt-2">Travel to your favorite destinations with ease</p>
 
         <form onSubmit={handleSearch} className="max-w-2xl mx-auto mt-8 bg-white rounded-xl shadow-md p-3 xl:flex grid items-center gap-3">
-          <div className="flex items-center gap-2 px-3 h-11 flex-1 rounded-lg border border-slate-200">
-            <MapPin size={16} className="text-slate-400 shrink-0" />
-            <input
-              type="text"
-              className="w-full bg-transparent outline-none placeholder:text-slate-400"
-              placeholder="From"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-            />
-          </div>
-          <ArrowLeftRight size={16} className="text-slate-400 shrink-0 " />
-          <div className="flex items-center gap-2 px-3 h-11 flex-1 rounded-lg border border-slate-200">
-            <MapPin size={16} className="text-slate-400 shrink-0" />
-            <input
-              type="text"
-              placeholder="To"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-              className="w-full bg-transparent outline-none placeholder:text-slate-400"
-            />
-          </div>
+          <LocationAutocomplete placeholder="From" value={from} onChange={setFrom} />
+          <ArrowLeftRight size={16} className="text-slate-400 shrink-0" />
+          <LocationAutocomplete placeholder="To" value={to} onChange={setTo} />
           <button
             type="submit"
             className="px-6 h-11 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 whitespace-nowrap"
