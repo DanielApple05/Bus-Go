@@ -66,9 +66,11 @@ const Buses = () => {
         <p className="text-slate-500 mt-2">Travel to your favorite destinations with ease</p>
 
         <form onSubmit={handleSearch} className="max-w-2xl mx-auto mt-8 bg-white rounded-xl shadow-md p-3 xl:flex grid items-center gap-3">
+
           <LocationAutocomplete placeholder="From" value={from} onChange={setFrom} />
-          <ArrowLeftRight size={16} className="text-slate-400 shrink-0" />
+          <ArrowLeftRight size={16} className="text-slate-400 my-2 xl:my-0 shrink-0 mx-auto" /> 
           <LocationAutocomplete placeholder="To" value={to} onChange={setTo} />
+
           <button
             type="submit"
             className="px-6 h-11 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 whitespace-nowrap"
