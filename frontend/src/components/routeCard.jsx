@@ -2,7 +2,7 @@ import { Landmark, Clock } from 'lucide-react';
 
 const RouteCard = ({ from, to, price, onSelect }) => {
   return (
-    <button
+    <div
       onClick={onSelect}
       className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-orange-300 hover:bg-orange-50/40 text-left transition-colors"
     >
@@ -22,7 +22,7 @@ const RouteCard = ({ from, to, price, onSelect }) => {
         <div className="text-xs text-slate-500">From</div>
         <div className="font-semibold text-orange-600">₦{price.toLocaleString()}</div>
       </div>
-    </button>
+    </div>
   );
 }
 

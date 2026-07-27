@@ -4,36 +4,38 @@ const BusCard = ({ bus, onSelect }) => {
   const availableSeats = bus.seats?.filter((s) => s.status === 'available').length ?? 0;
 
   return (
-    <div className={`flex items-center gap-4 p-4 rounded-xl border ${bus.isBookable ? 'border-slate-200' : 'border-slate-100 opacity-50'}`}>
-      <div className="w-28 h-20 rounded-lg bg-slate-100 shrink-0" />
-      <div className=" flex-1">
-        <h3 className="font-semibold text-slate-900 capitalize">{bus.busType}</h3>
-        <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-          <span className="flex items-center gap-1"><Users size={12} /> {bus.totalSeats} Seats</span>
-          <span className="flex items-center gap-1"><Snowflake size={12} /> AC</span>
+    <div className={`xl:flex grid items-center gap-4 p-4 rounded-xl border ${bus.isBookable ? 'border-slate-200' : 'border-slate-100 opacity-50'}`}>
+      <div className="xl:w-28 full xl:h-20 h-32 rounded-lg bg-slate-100 shrink-0" />
+      <div className=' flex justify-between w-full '>
+        <div className=" flex-1">
+          <h3 className="font-semibold text-slate-900 capitalize">{bus.busType}</h3>
+          <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+            <span className="flex items-center gap-1"><Users size={12} /> {bus.totalSeats} Seats</span>
+            <span className="flex items-center gap-1"><Snowflake size={12} /> AC</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm mt-2">
+            <span className="font-medium text-slate-900">{bus.departureTime}</span>
+          </div>
+          <div className="text-xs text-slate-500">{bus.route?.from} &rarr; {bus.route?.to}</div>
+          {!bus.isBookable && (
+            <div className="text-xs text-red-500 font-medium mt-1">Departed</div>
+          )}
         </div>
-        <div className="flex items-center gap-2 text-sm mt-2">
-          <span className="font-medium text-slate-900">{bus.departureTime}</span>
-        </div>
-        <div className="text-xs text-slate-500">{bus.route?.from} &rarr; {bus.route?.to}</div>
-        {!bus.isBookable && (
-          <div className="text-xs text-red-500 font-medium mt-1">Departed</div>
-        )}
-      </div>
 
-      <div className="text-right shrink-0">
-        <div className="font-semibold text-slate-900">₦{bus.price?.toLocaleString()}</div>
-        <div className="text-xs text-slate-500 mb-1">Per Seat</div>
-        <div className="text-xs text-slate-500">Available Seats</div>
-        <div className="text-green-600 font-semibold text-sm mb-2">{availableSeats}</div>
-        <button
-          onClick={() => onSelect(bus)}
-          disabled={!bus.isBookable}
-          className="px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-medium hover:bg-orange-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
-        >
-          {bus.isBookable ? 'Select Seats' : 'Departed'}
-        </button>
-      </div>
+        <div className="text-right shrink-0">
+          <div className="font-semibold text-slate-900">₦{bus.price?.toLocaleString()}</div>
+          <div className="text-xs text-slate-500 mb-1">Per Seat</div>
+          <div className="text-xs text-slate-500">Available Seats</div>
+          <div className="text-green-600 font-semibold text-sm mb-2">{availableSeats}</div>
+          <button
+            onClick={() => onSelect(bus)}
+            disabled={!bus.isBookable}
+            className="px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-medium hover:bg-orange-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
+          >
+            {bus.isBookable ? 'Select Seats' : 'Departed'}
+          </button>
+        </div>
+      </div >
     </div>
   );
 };
