@@ -10,6 +10,7 @@ import SeatSelection from './pages/seatSelection';
 import HireABus from './pages/hireABus';
 import MyBookings from './pages/myBooking';
 import ComingSoon from './pages/comingSoon';
+import Confirmation from './pages/confirmation';
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/hire-bus" element={<HireABus />} />
         <Route path="/booking" element={<MyBookings />} />
          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/confirmation" element={<Confirmation/>} />
       </Routes>
     </BookingProvider>
     </AuthProvider > 
