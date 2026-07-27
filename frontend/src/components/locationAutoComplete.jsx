@@ -49,7 +49,7 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           autoComplete="off"
-          className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+          className="w-full bg-transparent text-base outline-none placeholder:text-slate-400"
         />
       </div>
 
@@ -60,7 +60,7 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
               <button
                 type="button"
                 onClick={() => handleSelect(city)}
-                className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-orange-50 hover:text-orange-600"
+                className="w-full text-left px-3 py-2 text-base text-slate-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 {city}
               </button>
