@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Bus, Calendar, Armchair, Mail, Download } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import { useBooking } from '../context/BookingContext';
+import Navbar from '../components/navbar';
+import { useBooking } from '../context/bookingContext';
 
 const Confirmation = () => {
   const { booking, resetBooking } = useBooking();
