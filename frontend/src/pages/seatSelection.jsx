@@ -16,7 +16,7 @@ const Legend = ({ colorClass, label, filled }) => (
 const Input = ({ label, ...props }) => {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium text-slate-800">{label}</span>
+      <span className="text-base font-medium text-slate-800">{label}</span>
       <input
         {...props}
         className="h-11 px-3 rounded-lg border border-slate-200 text-sm outline-none focus:border-orange-500 placeholder:text-slate-400"
