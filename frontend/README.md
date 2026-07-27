@@ -1,5 +1,3 @@
-
-
 # BusGo 🚌
 
 BusGo is a full-stack bus transportation booking application I built for the **Frontend Developer Industrial Training Assessment** at **Renaissance Innovation Labs (RIL)**.
@@ -12,16 +10,16 @@ Guest checkout is fully supported because I wanted the booking process to be as 
 
 ## Features
 
-* Search available routes and buses
-* One-way and round-trip bookings
-* quick booking using today trips (one-way only) 
-* Seat selection with real-time availability
-* Automatic 10-minute seat reservation during checkout
-* Secure Paystack payment integration
-* Guest checkout (no account required)
-* User registration and login
-* Booking history for registered users
-* "Hire a Bus" request form
+- Search available routes and buses
+- One-way and round-trip bookings
+- quick booking using today trips (one-way only)
+- Seat selection with real-time availability
+- Automatic 10-minute seat reservation during checkout
+- Secure Paystack payment integration
+- Guest checkout (no account required)
+- User registration and login
+- Booking history for registered users
+- "Hire a Bus" request form
 
 ---
 
@@ -29,20 +27,20 @@ Guest checkout is fully supported because I wanted the booking process to be as 
 
 ### Frontend
 
-* React (Vite)
-* React Router
-* Tailwind CSS
-* Axios
-* React Context API
+- React (Vite)
+- React Router
+- Tailwind CSS
+- Axios
+- React Context API
 
 ### Backend
 
-* Node.js
-* Express
-* MongoDB (Mongoose)
-* JWT Authentication
-* bcrypt
-* Paystack API
+- Node.js
+- Express
+- MongoDB (Mongoose)
+- JWT Authentication
+- bcrypt
+- Paystack API
 
 ---
 
@@ -93,12 +91,20 @@ cd frontend
 npm install
 ```
 
+basic Test Routes
+
+````
+ from: 'Port Harcourt', to: 'Calabar',
+ from: 'Port Harcourt', to: Warri,
+ from: 'Abuja', to: 'Jos',
+ from: 'Abuja', to: 'Ilorin',
+
 Create a `.env` file:
 
 ```env
 VITE_API_BASE_URL=https://bus-go-lpcb.onrender.com/api
 VITE_PAYSTACK_PUBLIC_KEY=pk_test_9c177e7a58963919e100daae0683237c5761ce4b
-```
+````
 
 Start the application:
 
@@ -126,10 +132,10 @@ npm run dev
 
 A few decisions I made while building BusGo:
 
-* Booking a trip doesn't require an account. Users can check out as guests, while registered users get access to their booking history.
-* Seats are reserved for 10 minutes during checkout to reduce double bookings. If payment isn't completed, the seats become available again.
-* Payments are verified on the backend before any booking is confirmed instead of trusting the frontend.
-* I built the backend before the UI so every screen worked with real API data instead of mock data.
+- Booking a trip doesn't require an account. Users can check out as guests, while registered users get access to their booking history.
+- Seats are reserved for 10 minutes during checkout to reduce double bookings. If payment isn't completed, the seats become available again.
+- Payments are verified on the backend before any booking is confirmed instead of trusting the frontend.
+- I built the backend before the UI so every screen worked with real API data instead of mock data.
 
 ---
 
@@ -145,12 +151,12 @@ I also spent time handling authentication, payment verification, and keeping the
 
 If I continue developing BusGo, I'd like to add:
 
-* Email booking confirmations for hiring a bus
-* Booking cancellation and refunds
-* Admin dashboard
-* Live seat availability updates
-* Full return-trip seat selection
-* Automated testing
+- Email booking confirmations for hiring a bus
+- Booking cancellation and refunds
+- Admin dashboard
+- Live seat availability updates
+- Full return-trip seat selection
+- Automated testing
 
 ---
 

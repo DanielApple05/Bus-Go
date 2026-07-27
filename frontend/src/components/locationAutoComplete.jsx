@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { MapPin } from 'lucide-react';
-import API from '../../api/axios';
+import { getCities } from '../../api/routes';
 
 const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
   const [cities, setCities] = useState([]);
@@ -8,9 +8,14 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-    API.get('/routes/cities')
-      .then(({ data }) => setCities(data))
-      .catch(() => {});
+    const fetchCities = async () => {
+      try {
+        const response = await fetchCities();
+        setCities(response);
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -43,18 +48,18 @@ const LocationAutocomplete = ({ label, value, onChange, placeholder }) => {
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           autoComplete="off"
-          className="w-full bg-transparent outline-none placeholder:text-slate-400"
+          className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
         />
       </div>
 
-      {open && value && filtered.length > 0 && (
+      {open && filtered.length > 0 && (
         <ul className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
           {filtered.map((city) => (
             <li key={city}>
               <button
                 type="button"
                 onClick={() => handleSelect(city)}
-                className="w-full text-left px-3 py-2 text-slate-700 hover:bg-orange-50 hover:text-orange-600"
+                className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 {city}
               </button>
