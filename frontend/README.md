@@ -2,7 +2,7 @@
 
 # BusGo 🚌
 
-BusGo is a full-stack bus transportation booking application I built for the **Fullstack Developer Industrial Training Assessment** at **Renaissance Innovation Labs (RIL)**.
+BusGo is a full-stack bus transportation booking application I built for the **Frontend Developer Industrial Training Assessment** at **Renaissance Innovation Labs (RIL)**.
 
 Rather than building a simple UI, I wanted to create a booking experience that feels close to a real-world platform. Users can search routes, view available buses, choose their seats, pay securely with Paystack, and track their bookings if they decide to create an account.
 
