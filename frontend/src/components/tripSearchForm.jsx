@@ -41,22 +41,24 @@ const TripSearchForm = ({ onSearch }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 max-h-auto ">
-      {/* Trip type tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-4  mb-5">
-        {tripTypes.map(({ id, label, icon: Icon, path }) => (
-          <button
-            key={id}
-            onClick={() => (path ? navigate(path) : setTripType(id))}
-            className={` xl:flex grid items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tripType === id
-                ? 'bg-orange-600 text-white'
-                : 'text-slate-600 hover:bg-slate-50'
-              }`}
-          >
-            <Icon size={16} />
-            {label}
-          </button>
-        ))}
-      </div>
+  
+ <div className="flex items-center gap-1.5 sm:gap-2 border-b border-slate-200 pb-4 mb-5 overflow-x-auto">
+  {tripTypes.map(({ id, label, icon: Icon, path }) => (
+    <button
+      key={id}
+      onClick={() => (path ? navigate(path) : setTripType(id))}
+      className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
+        tripType === id
+          ? 'bg-orange-600 text-white'
+          : 'text-slate-600 hover:bg-slate-50'
+      }`}
+    >
+      <Icon size={14} className="sm:hidden" />
+      <Icon size={16} className="hidden sm:block" />
+      {label}
+    </button>
+  ))}
+</div>
 
       {/* Fields */}
       <form
@@ -109,7 +111,6 @@ const TripSearchForm = ({ onSearch }) => {
               onChange={handleChange('date')}
               className='w-full'
             />
-            {/* <Calendar size={16} className="text-slate-400 shrink-0" /> */}
           </div>
         </div>
 

@@ -12,7 +12,7 @@ const Card = ({ title, children }) => (
 );
 
 const Row = ({ label, value, strong }) => (
-  <div className="flex items-center justify-between text-sm py-1">
+  <div className="flex items-center justify-between text-sm py-1 ">
     <span className="text-slate-500">{label}</span>
     <span className={strong ? 'font-semibold text-slate-900' : 'text-slate-700'}>{value}</span>
   </div>
@@ -55,7 +55,7 @@ const BookingSummary = () => {
     <div>
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-6 py-10 mt-20">
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-orange-600 mb-4">
           <ArrowLeft size={18} />
         </button>
@@ -76,7 +76,7 @@ const BookingSummary = () => {
 
           <Card title="Passenger Details">
             <Row label="Name" value={booking.passenger.name} />
-            <Row label="Email" value={booking.passenger.email} />
+            <Row max-w-10 label="Email" value={booking.passenger.email} />
             <Row label="Phone" value={booking.passenger.phone} />
             <div className="mt-4 pt-4 border-t border-slate-100">
               <Row label="Seat Numbers" value={booking.seatNumbers?.join(', ')} strong />
