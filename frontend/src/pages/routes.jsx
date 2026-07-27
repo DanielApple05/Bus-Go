@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { MapPin, ArrowLeftRight } from 'lucide-react';
+import { MapPin, ArrowLeftRight, ArrowLeft } from 'lucide-react';
 import Navbar from '../components/navbar';
 import RouteCard from '../components/routeCard';
 import { useBooking } from '../context/bookingContext';
@@ -58,6 +58,9 @@ const Buses = () => {
     <div>
       <Navbar />
       <section className="text-center py-14 px-6 bg-slate-50 mt-20">
+        <button onClick={() => navigate(-1)} className="flex xl:hidden items-center gap-2 text-slate-500 hover:text-orange-600 mb-4  ">
+          <ArrowLeft size={18} />
+        </button>
         <h1 className="text-4xl font-bold text-slate-900">Our Routes</h1>
         <p className="text-slate-500 mt-2">Travel to your favorite destinations with ease</p>
 
@@ -104,15 +107,15 @@ const Buses = () => {
 
       <section className="max-w-full mx-auto mb-12 xl:px-6 p-2">
         <div className="bg-orange-50 rounded-2xl p-8 grid items-center justify-between">
-          
-            <h3 className="text-xl font-bold text-slate-900">Hire a Bus</h3>
-            <p className="text-slate-600 text-sm mt-1">Planning a group trip, event or tour? Hire a bus that fits your needs.</p>
-            <Link
+
+          <h3 className="text-xl font-bold text-slate-900">Hire a Bus</h3>
+          <p className="text-slate-600 text-sm mt-1">Planning a group trip, event or tour? Hire a bus that fits your needs.</p>
+          <Link
             to={'/hire-bus'}
-             className="mt-4 px-5 py-2.5 text-center rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700">
-              Hire a Bus
-            </Link>
-          
+            className="mt-4 px-5 py-2.5 text-center rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700">
+            Hire a Bus
+          </Link>
+
         </div>
       </section>
     </div>

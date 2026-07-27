@@ -5,7 +5,7 @@ const BusCard = ({ bus, onSelect }) => {
 
   return (
     <div className={`xl:flex grid items-center gap-4 p-4 rounded-xl border ${bus.isBookable ? 'border-slate-200' : 'border-slate-100 opacity-50'}`}>
-      <div className="xl:w-28 full xl:h-20 h-32 rounded-lg bg-slate-100 shrink-0" />
+      <div className="xl:w-28 w-full xl:h-20 h-32 rounded-lg bg-slate-100 shrink-0" />
       <div className=' flex justify-between w-full '>
         <div className=" flex-1">
           <h3 className="font-semibold text-slate-900 capitalize">{bus.busType}</h3>
