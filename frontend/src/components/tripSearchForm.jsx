@@ -73,9 +73,9 @@ const TripSearchForm = ({ onSearch }) => {
 
         <div
           onClick={swapLocations}
-          className="hidden md:flex items-center w-full justify-center xl:w-9 h-9 mb-1 rounded-full border border-slate-200 text-slate-500 hover:text-orange-600 hover:border-orange-600"
+          className="flex items-center justify-center mx-auto w-9 h-9 mb-1 rounded-full border border-slate-200 text-slate-500 hover:text-orange-600 hover:border-orange-600"
           aria-label="Swap locations">
-          <ArrowLeftRight size={16} />
+          <ArrowLeftRight size={16} className='flex justify-center items-center'/>
         </div>
 
         <LocationAutocomplete
