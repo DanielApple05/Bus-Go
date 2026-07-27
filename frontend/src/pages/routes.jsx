@@ -69,7 +69,7 @@ const Buses = () => {
             <MapPin size={16} className="text-slate-400 shrink-0" />
             <input
               type="text"
-              className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+              className="w-full bg-transparent outline-none placeholder:text-slate-400"
               placeholder="From"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
@@ -83,7 +83,7 @@ const Buses = () => {
               placeholder="To"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+              className="w-full bg-transparent outline-none placeholder:text-slate-400"
             />
           </div>
           <button
